@@ -14,7 +14,10 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
     "recoil": "^0.7.7",
-    "swr": "^2.1.5"
+    "swr": "^2.1.5",
+    "viem": "^0.3.24",
+    "wagmi": "^1.0.2",
+    "web3": "^1.10.0"
   },
   "devDependencies": {
     "@types/node": "20.1.3",
