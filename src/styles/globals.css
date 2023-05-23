@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/background.svg"),
+    linear-gradient(154.03deg, #4481eb 0%, #04befe 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+main {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
