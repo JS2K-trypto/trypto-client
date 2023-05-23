@@ -12,6 +12,9 @@ html,
 body {
   height: 100vh;
   overflow-x: hidden;
+  background-image: url("/assets/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 a {
