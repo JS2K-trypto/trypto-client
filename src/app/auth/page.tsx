@@ -25,7 +25,7 @@ export default function AuthPage() {
     <div className="absolute bottom-0 w-full h-[522px] bg-white/50 border-1 rounded-t-[15px] p-5 flex flex-col items-center font-bold">
       <Image
         className="mt-2.5"
-        src="/assets/airport.png"
+        src="/images/airport.png"
         alt="airport-image"
         width={289}
         height={253}
