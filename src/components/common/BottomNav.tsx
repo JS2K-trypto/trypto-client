@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import NavMenu from "./NavMenu";
+import NavMenu from "./BottomNavMenu";
 
 export default function BottomNav() {
   const [activeMenu, setActiveMenu] = useState("Plans");
@@ -11,15 +11,15 @@ export default function BottomNav() {
     setActiveMenu(menu);
   };
   return (
-    <div className="fixed left-0 bottom-0 z-10   w-full ">
-      <ul className="bg-white rounded-2xl flex  justify-between m-4 mx-8 py-4">
-        <li className="mx-6 bg-yellow-500">
+    <div className="fixed left-0 bottom-0 z-10 w-full">
+      <ul className="bg-white rounded-t-2xl flex justify-between p-4">
+        <li className="mx-6">
           <Link href="/plans">
             <Image
               alt="Plans icon"
               src="/images/PlanMenu.svg"
-              width="38"
-              height="30"
+              width="36"
+              height="29"
             />
           </Link>
         </li>
@@ -28,8 +28,8 @@ export default function BottomNav() {
             <Image
               alt="Plans icon"
               src="/images/CommunityMenu.svg"
-              width="37"
-              height="36"
+              width="35"
+              height="35"
             />
           </Link>
         </li>
@@ -38,8 +38,8 @@ export default function BottomNav() {
             <Image
               alt="Plans icon"
               src="/images/BadgeMenu.svg"
-              width="27"
-              height="36"
+              width="26"
+              height="34"
             />
           </Link>
         </li>
