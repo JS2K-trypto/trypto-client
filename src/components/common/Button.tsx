@@ -1,16 +1,16 @@
 interface ButtonProps {
   children: React.ReactNode;
-  onClick?: (e?: any) => void;
+  onClick?: () => void;
   className?: string;
 }
 
-const Button: React.FC<ButtonProps> = (props) => {
+const Button = ({ children, onClick, className }: ButtonProps) => {
   return (
     <div
-      onClick={props.onClick}
-      className={`bg-yellow-300 py-4 px-5 rounded-3xl shadow-md ${props.className}`}
+      onClick={onClick}
+      className={`bg-yellow-300 py-4 px-5 rounded-3xl shadow-md ${className}`}
     >
-      <div className="font-bold text-base">{props.children}</div>
+      <div className="font-bold text-base">{children}</div>
     </div>
   );
 };
