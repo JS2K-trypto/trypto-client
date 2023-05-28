@@ -2,10 +2,17 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import Menu from "@/components/common/Menu";
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useEnsAvatar,
+  useEnsName,
+} from "wagmi";
 
 const Header = () => {
   const [activeMenu, setActiveMenu] = useState(false);
-
+  const { address, connector, isConnected } = useAccount();
   const handleClick = () => {
     setActiveMenu((prev) => !prev);
   };

@@ -3,13 +3,15 @@
 import React, { useState } from "react";
 import Badge from "../../components/common/Badge";
 import Button from "@/components/common/Button";
-
+import { Connector, useAccount, useConnect } from "wagmi";
+import { redirect } from "next/navigation";
+import path from "@/configs/path";
+import { RedirectType } from "next/dist/client/components/redirect";
 export default function Badges() {
-  const [activeMenu, setActiveMenu] = useState(false);
-
-  const handleClick = () => {
-    setActiveMenu((prev) => !prev);
-  };
+  const { isConnected } = useAccount();
+  if (!isConnected) {
+    redirect(path.AUTH, RedirectType.replace);
+  }
 
   return (
     <div className="mb-14">
