@@ -1,11 +1,28 @@
+"use client";
 import Image from "next/image";
 import React from "react";
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useEnsAvatar,
+  useEnsName,
+} from "wagmi";
+import { redirect } from "next/navigation";
+import path from "@/configs/path";
+import { RedirectType } from "next/dist/client/components/redirect";
 
 const Menu = () => {
+  const { address, isConnected } = useAccount();
+  const { disconnect } = useDisconnect();
+  if (!isConnected) {
+    redirect(path.AUTH, RedirectType.replace);
+  }
+
   return (
     <div>
-      <div className="absolute inset-x-5 inset-y-56 flex flex-col justify-center items-center z-30 bg-slate-300 bg-opacity-60 backdrop-blur-md rounded-2xl shadow-md">
-        <div className=" p-5 ">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center items-center z-30 bg-white bg-opacity-60 backdrop-blur-md rounded-2xl shadow-md w-96 h-fit">
+        <div className=" p-5">
           <div className="text-2xl font-bold w-full">Menu</div>
 
           <div className="flex justify-between bg-white rounded-2xl p-6 my-1 w-full shadow-lg">
@@ -16,15 +33,27 @@ const Menu = () => {
                 width={60}
                 height={60}
               />
-              <div className="m-4">
-                <div className="text-base font-bold">Yonghyun Kim</div>
+              <div className="m-4 w-44">
+                <div className="flex mb-1">
+                  <div className="text-base font-bold mr-1">Noname</div>
+                  <Image
+                    src="/images/EditIcon.svg"
+                    alt="Edit Icon"
+                    width={20}
+                    height={20}
+                    onClick={() => {
+                      console.log("edit");
+                    }}
+                  />
+                </div>
+
                 <div className="text-xs font-bold">
-                  0x7c81003b0a60a64e0817...
+                  {address?.slice(0, 22)}...
                 </div>
               </div>
             </div>
 
-            <div className="">
+            <div className="" onClick={() => disconnect()}>
               <Image
                 src="/images/SignoutIcon.svg"
                 alt="Signout Icon"
@@ -34,7 +63,7 @@ const Menu = () => {
             </div>
           </div>
           {/* Tab Button */}
-          <div className="flex bg-white rounded-2xl p-1 w-full my-1 justify-center shadow-lg">
+          <div className="flex bg-white rounded-2xl p-1 w-full my-2 justify-center shadow-lg">
             <div className="bg-yellow-400 text-sm font-medium py-2 px-6 w-full text-center rounded-2xl">
               Total
             </div>
@@ -63,11 +92,11 @@ const Menu = () => {
           </div>
         </div>
         {/* Buttons */}
-        <div className="flex justify-center items-center text-center border-t border-gray-300 w-full h-full">
-          <div className="text-xl font-bold border-r flex justify-center items-center border-gray-300 w-full h-full">
+        <div className=" flex justify-center items-center text-center border-t border-gray-300 w-full h-full">
+          <div className="p-4 text-xl font-bold border-r flex justify-center items-center border-gray-300 w-full h-full ">
             Back
           </div>
-          <div className="text-xl font-bold flex justify-center items-center w-full h-full">
+          <div className="p-4 text-xl font-bold flex justify-center items-center w-full h-full">
             Check
           </div>
         </div>
