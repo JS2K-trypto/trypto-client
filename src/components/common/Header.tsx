@@ -41,8 +41,8 @@ const Header = () => {
           height={34}
           alt="Menu Button"
         />
-        {activeMenu && <Menu />}
       </div>
+      {activeMenu && <Menu setActiveMenu={setActiveMenu} />}
     </div>
   );
 };

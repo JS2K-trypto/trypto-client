@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   useAccount,
   useConnect,
@@ -11,13 +11,40 @@ import {
 import { redirect } from "next/navigation";
 import path from "@/configs/path";
 import { RedirectType } from "next/dist/client/components/redirect";
+import axios from "axios";
 
-const Menu = () => {
+interface MenuProps {
+  setActiveMenu: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Menu = ({ setActiveMenu }: MenuProps) => {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
+  const [nickname, setNickname] = useState("Noname");
   if (!isConnected) {
     redirect(path.AUTH, RedirectType.replace);
   }
+
+  useEffect(() => {
+    // axios
+    //   .get("https://localhost:4000/sendlist/todo", {
+    //     params: { walletAccount: "0xCA122d8a3c6d1d2e4298e0CB7e027CD371CCAaA3" },
+    //   })
+    //   .then((res) => {});
+    axios
+      .get("http://152.69.231.140:1323/v01/acc/profile", {
+        data: {
+          walletAccount: "0xCA122d8a3c6d1d2e4298e0CB7e027CD371CCAaA3",
+        },
+      })
+      .then((res) => {
+        setNickname(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div>
@@ -35,7 +62,7 @@ const Menu = () => {
               />
               <div className="m-4 w-44">
                 <div className="flex mb-1">
-                  <div className="text-base font-bold mr-1">Noname</div>
+                  <div className="text-base font-bold mr-1">{nickname}</div>
                   <Image
                     src="/images/EditIcon.svg"
                     alt="Edit Icon"
@@ -92,7 +119,10 @@ const Menu = () => {
           </div>
         </div>
         {/* Buttons */}
-        <div className=" flex justify-center items-center text-center border-t border-gray-300 w-full h-full">
+        <div
+          className=" flex justify-center items-center text-center border-t border-gray-300 w-full h-full"
+          onClick={() => setActiveMenu((prev) => !prev)}
+        >
           <div className="p-4 text-xl font-bold border-r flex justify-center items-center border-gray-300 w-full h-full ">
             Back
           </div>
@@ -103,7 +133,10 @@ const Menu = () => {
       </div>
 
       {/* Menu Background */}
-      <div className="absolute left-0 top-0 bg-black bg-opacity-30 backdrop-blur-sm z-20 h-screen w-screen"></div>
+      <div
+        className="absolute left-0 top-0 bg-black bg-opacity-30 backdrop-blur-sm z-20 h-screen w-screen"
+        onClick={() => setActiveMenu((prev) => !prev)}
+      ></div>
     </div>
   );
 };
