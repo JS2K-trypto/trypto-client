@@ -20,7 +20,12 @@ export default function TimeSchedule({
   description = "",
   memo = "",
 }: TimeScheduleProps) {
-  const { open, onOpen } = useModal();
+  const { open, onOpen, onClose } = useModal();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <>
       <div className="flex items-center">
@@ -44,8 +49,8 @@ export default function TimeSchedule({
           </button>
         </div>
       </div>
-      <Modal open={open}>
-        <ScheduleForm />
+      <Modal open={open} onClose={onClose}>
+        <ScheduleForm onSubmit={handleSubmit} onCancel={onClose} />
       </Modal>
     </>
   );

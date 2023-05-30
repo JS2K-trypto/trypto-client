@@ -9,7 +9,9 @@ import NewPlanForm from "@/components/plans/NewPlanForm";
 
 export default function Plans() {
   const { open, onOpen, onClose } = useModal();
-
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
   return (
     <>
       <PageContainer title="My Plan">
@@ -31,7 +33,7 @@ export default function Plans() {
         </section>
       </PageContainer>
       <Modal open={open} onClose={onClose}>
-        <NewPlanForm />
+        <NewPlanForm onSubmit={handleSubmit} onCancel={onClose} />
       </Modal>
     </>
   );
