@@ -14,6 +14,7 @@ export default function Plans() {
     <>
       <PageContainer title="My Plan">
         <button
+          type="button"
           className="absolute rounded-full bg-yellow-300 m-5 top-0 right-0 w-10 h-10 flex-center"
           onClick={onOpen}
         >

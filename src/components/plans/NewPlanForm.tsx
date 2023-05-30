@@ -22,10 +22,16 @@ export default function NewPlanForm() {
         <Input placeholder="contry" />
       </div>
       <div className="flex gap-5 border-t border-gray-300 p-5 mt-5">
-        <button className="rounded-full shadow-md h-[50px] flex-1 bg-gray-50">
+        <button
+          type="button"
+          className="rounded-full shadow-md h-[50px] flex-1 bg-gray-50"
+        >
           cancel
         </button>
-        <button className="rounded-full shadow-md h-[50px] flex-1 bg-yellow-300">
+        <button
+          type="button"
+          className="rounded-full shadow-md h-[50px] flex-1 bg-yellow-300"
+        >
           save
         </button>
       </div>
