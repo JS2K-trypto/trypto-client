@@ -15,7 +15,7 @@ export default function Modal({ open, onClose, children }: ModalProps) {
   }
 
   return createPortal(
-    <div className="fixed w-full h-full top-0">
+    <div className="fixed w-full h-full top-0 z-50">
       <div
         className="w-full h-full bg-black/30 backdrop-blur-sm"
         onClick={onClose}
