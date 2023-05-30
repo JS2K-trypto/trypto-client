@@ -1,21 +1,43 @@
-import React from "react";
+"use client";
 import Image from "next/image";
-import MenuIcon from "./icons/MenuIcon";
+import React, { useState } from "react";
+import Menu from "@/components/common/Menu";
 
-export default function Header() {
+const Header = () => {
+  const [activeMenu, setActiveMenu] = useState(false);
+
+  const handleClick = () => {
+    setActiveMenu((prev) => !prev);
+  };
   return (
-    <header className="p-5 flex">
-      <input
-        type="text"
-        className="h-[60px] rounded-2xl p-5 flex-1 border border-white bg-white/50"
-        placeholder="search"
-      />
-      <button
-        type="button"
-        className="p-4 border border-white rounded-2xl ml-2.5 bg-white/50 shrink-0"
+    <div className="flex justify-between items-center p-5">
+      <div className="bg-white bg-opacity-50 w-4/5 flex justify-between rounded-2xl p-4 items-center border border-white shadow-md">
+        <div className="font-bold text-xl mx-2 text-left whitespace-nowrap overflow-hidden">
+          Search
+        </div>
+        <Image
+          src="/images/SearchIcon.svg"
+          width={24}
+          height={24}
+          alt="Search Button"
+          className="mx-1"
+        />
+      </div>
+
+      <div
+        className="p-4 bg-white bg-opacity-50 border border-white shadow-md rounded-2xl"
+        onClick={handleClick}
       >
-        <MenuIcon />
-      </button>
-    </header>
+        <Image
+          src="/images/MenuIcon.svg"
+          width={34}
+          height={34}
+          alt="Menu Button"
+        />
+        {activeMenu && <Menu />}
+      </div>
+    </div>
   );
-}
+};
+
+export default Header;
