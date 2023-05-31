@@ -18,7 +18,7 @@ const Header = () => {
   };
   return (
     <div className="flex justify-between items-center p-5">
-      <div className="bg-white bg-opacity-50 w-4/5 flex justify-between rounded-2xl p-4 items-center border border-white shadow-md">
+      <div className="bg-white bg-opacity-50 flex-1 flex justify-between rounded-2xl p-4 items-center border border-white shadow-md mr-5">
         <div className="font-bold text-xl mx-2 text-left whitespace-nowrap overflow-hidden">
           Search
         </div>
@@ -30,8 +30,8 @@ const Header = () => {
           className="mx-1"
         />
       </div>
-
-      <div
+      <button
+        type="button"
         className="p-4 bg-white bg-opacity-50 border border-white shadow-md rounded-2xl"
         onClick={handleClick}
       >
