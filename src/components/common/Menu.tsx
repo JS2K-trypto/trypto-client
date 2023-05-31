@@ -20,26 +20,47 @@ interface MenuProps {
 const Menu = ({ setActiveMenu }: MenuProps) => {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
+  const [isEdit, setIsEdit] = useState(false);
   const [nickname, setNickname] = useState("Noname");
+  const [changeNickname, setChangeNickname] = useState("");
+
   if (!isConnected) {
     redirect(path.AUTH, RedirectType.replace);
   }
-
-  useEffect(() => {
-    // axios
-    //   .get("https://localhost:4000/sendlist/todo", {
-    //     params: { walletAccount: "0xCA122d8a3c6d1d2e4298e0CB7e027CD371CCAaA3" },
-    //   })
-    //   .then((res) => {});
+  const handleEdit = () => {
+    setIsEdit(true);
+  };
+  const handleCancel = () => {
+    setChangeNickname(nickname);
+    setIsEdit(false);
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = { ...e.target };
+    setChangeNickname(value);
+  };
+  const handleCheck = () => {
     axios
-      .get("http://152.69.231.140:1323/v01/acc/profile", {
-        data: {
-          walletAccount: "0xCA122d8a3c6d1d2e4298e0CB7e027CD371CCAaA3",
-        },
+      .post("http://152.69.231.140:1323/v01/acc/register", {
+        walletAccount: address,
+        nickName: changeNickname,
       })
       .then((res) => {
-        setNickname(res.data);
-        console.log(res.data);
+        console.log(res);
+        setNickname(changeNickname);
+        setIsEdit(false);
+        // ToDo 완료 토스트 메세지
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    axios
+      .get(
+        `http://152.69.231.140:1323/v01/acc/profile?walletAccount=${address}`
+      )
+      .then((res) => {
+        setNickname(res.data[0]);
+        setChangeNickname(res.data[0]);
+        console.log("res.data: ", res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -61,19 +82,43 @@ const Menu = ({ setActiveMenu }: MenuProps) => {
                 height={60}
               />
               <div className="m-4 w-44">
-                <div className="flex mb-1">
-                  <div className="text-base font-bold mr-1">{nickname}</div>
-                  <Image
-                    src="/images/EditIcon.svg"
-                    alt="Edit Icon"
-                    width={20}
-                    height={20}
-                    onClick={() => {
-                      console.log("edit");
-                    }}
-                  />
-                </div>
-
+                {isEdit ? (
+                  <div className="flex mx-1 gap-1">
+                    <input
+                      className="w-24"
+                      value={changeNickname}
+                      onChange={handleChange}
+                    />
+                    <Image
+                      src="/images/Cancel.svg"
+                      alt="Cancel Icon"
+                      width={12}
+                      height={12}
+                      onClick={handleCancel}
+                    />
+                    <Image
+                      src="/images/Checkmark.svg"
+                      alt="Check Icon"
+                      width={20}
+                      height={20}
+                      onClick={handleCheck}
+                    />
+                  </div>
+                ) : (
+                  <div className="flex mb-1">
+                    <div className="text-base font-bold mr-1 ">
+                      {nickname === "" ? "Noname" : nickname}
+                    </div>
+                    <Image
+                      className="mx-1"
+                      src="/images/EditIcon.svg"
+                      alt="Edit Icon"
+                      width={16}
+                      height={16}
+                      onClick={handleEdit}
+                    />
+                  </div>
+                )}
                 <div className="text-xs font-bold">
                   {address?.slice(0, 22)}...
                 </div>
