@@ -1,5 +1,5 @@
 import Button from "@/components/common/Button";
-import Badge from "../../../components/common/Badge";
+import Badge from "../../../components/badges/Badge";
 
 const Issue = () => {
   return (

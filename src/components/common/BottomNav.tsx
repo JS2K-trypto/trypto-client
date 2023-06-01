@@ -37,7 +37,7 @@ export default function BottomNav() {
           <Link href="/badges">
             <Image
               alt="Plans icon"
-              src="/images/BadgeMenu.svg"
+              src="/images/BadgeMenu2.svg"
               width="26"
               height="34"
             />
