@@ -5,13 +5,14 @@ import PlusIcon from "@/components/common/icons/PlusIcon";
 import PlanCard from "@/components/plans/PlanCard";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/common/Modal";
-import NewPlanForm from "@/components/plans/NewPlanForm";
+import { TripPlanFormData } from "@/interfaces/datas/trip";
+import PlanForm from "@/components/plans/PlanForm";
 
 export default function Plans() {
   const { open, onOpen, onClose } = useModal();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
+
+  const handleSubmit = (data: TripPlanFormData) => {};
+
   return (
     <>
       <PageContainer title="My Plan">
@@ -33,7 +34,7 @@ export default function Plans() {
         </section>
       </PageContainer>
       <Modal open={open} onClose={onClose}>
-        <NewPlanForm onSubmit={handleSubmit} onCancel={onClose} />
+        <PlanForm onSubmit={handleSubmit} onCancel={onClose} />
       </Modal>
     </>
   );
