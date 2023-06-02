@@ -58,12 +58,13 @@ const Menu = ({ setActiveMenu }: MenuProps) => {
         `http://152.69.231.140:1323/v01/acc/profile?walletAccount=${address}`
       )
       .then((res) => {
-        setNickname(res.data[0]);
-        setChangeNickname(res.data[0]);
+        setNickname(res.data.nickname);
+        setChangeNickname(res.data.nickname);
         console.log("res.data: ", res.data);
       })
       .catch((err) => {
         console.log(err);
+        console.log(address);
       });
   }, []);
 
