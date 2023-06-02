@@ -1,5 +1,5 @@
 "use client";
-import { useGeoLocation } from "./useGeoLocation";
+import { useGeoLocation } from "../badges/useGeoLocation";
 
 const geolocationOptions = {
   enableHighAccuracy: true,
