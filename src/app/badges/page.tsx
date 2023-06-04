@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Badge from "../../components/badges/Badge";
 import Button from "@/components/common/Button";
 import { Connector, useAccount, useConnect } from "wagmi";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import path from "@/configs/path";
 import { RedirectType } from "next/dist/client/components/redirect";
 import axios from "axios";
@@ -12,6 +12,9 @@ import useModal from "@/hooks/useModal";
 import Modal from "@/components/common/Modal";
 import NewBadgeModal from "@/components/badges/NewBadgeModal";
 import { useGeoLocation } from "@/app/badges/useGeoLocation";
+import Lottie from "lottie-react";
+import LocationPin from "./LocationPin.json";
+import AirplaneLoading from "./AirplaneLoading.json";
 
 const geolocationOptions = {
   enableHighAccuracy: true,
@@ -20,14 +23,19 @@ const geolocationOptions = {
 };
 
 export default function Badges() {
+  const getMyBadgesUrl =
+    "http://152.69.231.140:1323/v01/badge/user?walletAccount=";
+  const getNewBadgeUrl = "http://152.69.231.140:1323/v01/badge/issue";
   const { isConnected, address } = useAccount();
   const { open, onOpen, onClose } = useModal();
+  const router = useRouter();
   const { location, error } = useGeoLocation(geolocationOptions);
   if (!isConnected) {
     redirect(path.AUTH, RedirectType.replace);
   }
   const [disableButton, setDisableButton] = useState(false);
   const [myBadges, setMyBadges] = useState([]);
+  const [loadingBadge, setLoadingBadge] = useState(false);
 
   const handleClick = () => {
     console.log("handleClick");
@@ -36,37 +44,39 @@ export default function Badges() {
     setTimeout(() => {
       setDisableButton(false);
     }, 2000);
-    // axios
-    //   .post("http://152.69.231.140:1323/v01/badge/issue", {
-    //     walletAccount: "0xCA122d8a3c6d1d2e4298e0CB7e027CD371CCAaA3",
-    //     latitude: 37.5796,
-    //     longitude: 126.977,
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Ok clicked");
+    setLoadingBadge(true);
+    onClose();
     axios
-      .post("http://152.69.231.140:1323/v01/badge/issue", {
+      .post(getNewBadgeUrl, {
         walletAccount: address,
         latitude: location.latitude,
         longitude: location.longitude,
       })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        console.log(res);
+        setLoadingBadge(false);
+        router.push(path.BADGE_ISSUE);
+      })
+      .catch((err) => {
+        console.log("Issue failed", err);
+        console.log(
+          "address, latitude, longitude: ",
+          address,
+          location.latitude,
+          location.longitude
+        );
+        setLoadingBadge(false);
+      });
   };
   useEffect(() => {
     axios
-      .get(`http://152.69.231.140:1323/v01/badge/user?walletAccount=${address}`)
+      .get(`${getMyBadgesUrl}${address}`)
       .then((res) => {
-        console.log(res.data.Arr);
-        setMyBadges(res.data.Arr);
+        console.log(res.data);
+        setMyBadges(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -82,24 +92,20 @@ export default function Badges() {
         </Button>
       </div>
       {/* Badges */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 p-6 auto-rows-auto">
+        <Badge />
+        <Badge />
+        <Badge />
+        <Badge />
+        <Badge />
+        <Badge />
+        <Badge />
+      </div>
 
       <div className="grid gap-4 grid-cols-2 p-6">
         {myBadges.map((badge, idx) => (
           <Badge key={idx} />
         ))}
-        {/* <Badge />
-        <Badge />
-        <Badge />
-        <Badge />
-        <Badge />
-        <Badge />
-        <Badge />
-        <Badge />
-        <Badge /> */}
-        {/* <Badge />
-        <Badge />
-        <Badge />
-        <Badge /> */}
       </div>
       <Modal open={open} onClose={onClose}>
         <NewBadgeModal
@@ -108,6 +114,19 @@ export default function Badges() {
           location={location}
         />
       </Modal>
+      {loadingBadge && (
+        <div className="bg-slate-100 absolute left-0 top-0 w-full h-full z-50 ">
+          <div className="flex flex-col items-center">
+            <div className="w-40 flex justify-center items-center mt-40 pt-20">
+              <Lottie animationData={LocationPin} />
+            </div>
+            <div className=" p-10">
+              <Lottie animationData={AirplaneLoading} />
+            </div>
+            <div className="font-semibold text-lg">Please wait...</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
