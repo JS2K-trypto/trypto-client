@@ -1,13 +1,18 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
-export default function EditIcon() {
+export default forwardRef<SVGSVGElement, EditIconProps>(function EditIcon(
+  { ...props },
+  ref
+) {
   return (
     <svg
+      ref={ref}
       width="24"
       height="24"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="M5 16L4 20L8 19L19.5858 7.41421C20.3668 6.63316 20.3668 5.36683 19.5858 4.58579L19.4142 4.41421C18.6332 3.63316 17.3668 3.63317 16.5858 4.41421L5 16Z"
@@ -33,4 +38,4 @@ export default function EditIcon() {
       />
     </svg>
   );
-}
+});
