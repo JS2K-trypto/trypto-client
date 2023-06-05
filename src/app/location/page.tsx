@@ -1,5 +1,5 @@
 "use client";
-import { useGeoLocation } from "./useGeoLocation";
+import { useGeoLocation } from "../badges/useGeoLocation";
 
 const geolocationOptions = {
   enableHighAccuracy: true,
@@ -14,6 +14,7 @@ const Location = () => {
     <div>
       <div>latitude: {location.latitude}</div>
       <div>longitude: {location.longitude}</div>
+      <a href="http://www.freepik.com">Designed by Freepik</a>
     </div>
   );
 };

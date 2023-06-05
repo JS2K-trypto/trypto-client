@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import Providers from "@/components/common/Providers";
 import BottomNav from "@/components/common/BottomNav";
 import Header from "@/components/common/Header";
+import dotenv from "dotenv";
+dotenv.config();
 
 const inter = Inter({ subsets: ["latin"] });
 

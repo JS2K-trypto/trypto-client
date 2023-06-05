@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-interface ILocation {
+export interface ILocation {
   latitude: number;
   longitude: number;
 }
