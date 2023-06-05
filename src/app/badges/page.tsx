@@ -24,7 +24,8 @@ const geolocationOptions = {
 
 export default function Badges() {
   const getMyBadgesUrl =
-    "http://152.69.231.140:1323/v01/badge/user?walletAccount=";
+    "http://152.69.231.140:1323/v01/badge/user/all?walletAccount=";
+  // "http://152.69.231.140:1323/v01/badge/user?walletAccount=";
   const getNewBadgeUrl = "http://152.69.231.140:1323/v01/badge/issue";
   const { isConnected, address } = useAccount();
   const { open, onOpen, onClose } = useModal();
@@ -92,19 +93,21 @@ export default function Badges() {
         </Button>
       </div>
       {/* Badges */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 p-6 auto-rows-auto">
-        <Badge />
-        <Badge />
-        <Badge />
-        <Badge />
-        <Badge />
-        <Badge />
-        <Badge />
-      </div>
+      {/* <div className="grid gap-2 grid-cols-2 lg:grid-cols-3  auto-rows-auto">
+        <Badge tier={"gold"} />
+        <Badge tier={"silver"} />
+        <Badge tier={"silver"} />
+        <Badge tier={"gold"} />
+        <Badge tier={"bronze"} />
+        <Badge tier={"silver"} />
+        <Badge tier={"bronze"} />
+      </div> */}
 
-      <div className="grid gap-4 grid-cols-2 p-6">
+      <div className="grid gap-2 grid-cols-2 lg:grid-cols-3 auto-rows-auto">
         {myBadges.map((badge, idx) => (
-          <Badge key={idx} />
+          <div key={idx}>
+            <Badge badge={badge} />
+          </div>
         ))}
       </div>
       <Modal open={open} onClose={onClose}>
