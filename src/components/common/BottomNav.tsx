@@ -5,24 +5,21 @@ import Link from "next/link";
 import Image from "next/image";
 import NavMenu from "./BottomNavMenu";
 import { usePathname } from "next/navigation";
+import path from "@/configs/path";
 
 export default function BottomNav() {
   const pathname = usePathname();
-  const [currentPage, setCurrentPage] = useState("");
   const [activeMenu, setActiveMenu] = useState("Plans");
   const handleMenuClick = (menu: string) => {
     setActiveMenu(menu);
   };
-  useEffect(() => {
-    setCurrentPage(pathname);
-    console.log(pathname);
-  });
+
   return (
     <div className="fixed left-0 bottom-0 z-10 w-full">
       <ul className="bg-white rounded-t-2xl flex justify-between p-4">
         <li className="mx-6">
-          <Link href="/plans">
-            {currentPage === "/plans" ? (
+          <Link href={path.PLANS}>
+            {pathname.startsWith(path.PLANS) ? (
               <Image
                 alt="Plans icon"
                 src="/images/ActivePlanMenu.svg"
@@ -40,8 +37,8 @@ export default function BottomNav() {
           </Link>
         </li>
         <li className="mx-6">
-          <Link href="/community">
-            {currentPage === "/community" ? (
+          <Link href={path.COMMUNITY}>
+            {pathname.startsWith(path.COMMUNITY) ? (
               <Image
                 alt="Plans icon"
                 src="/images/ActiveCommunityMenu.svg"
@@ -59,8 +56,8 @@ export default function BottomNav() {
           </Link>
         </li>
         <li className="mx-6">
-          <Link href="/badges">
-            {currentPage === "/badges" ? (
+          <Link href={path.BADGE}>
+            {pathname.startsWith(path.BADGE) ? (
               <Image
                 alt="Plans icon"
                 src="/images/ActiveBadgeMenu4.svg"
