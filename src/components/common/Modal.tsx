@@ -20,7 +20,7 @@ export default function Modal({ open, onClose, children }: ModalProps) {
         className="w-full h-full bg-black/30 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="absolute bottom-0 w-full rounded-t-2xl bg-white/80 mt-auto">
+      <div className="absolute bottom-0 w-full rounded-t-2xl bg-white/80 mt-auto p-5">
         {children}
       </div>
     </div>,

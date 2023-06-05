@@ -5,13 +5,31 @@ import PlusIcon from "@/components/common/icons/PlusIcon";
 import PlanCard from "@/components/plans/PlanCard";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/common/Modal";
-import NewPlanForm from "@/components/plans/NewPlanForm";
+import { TripPlanFormData } from "@/interfaces/datas/trip";
+import PlanForm from "@/components/plans/PlanForm";
+import { createPlan } from "@/api/plan";
+import useMyPlan from "@/hooks/datas/useMyPlan";
+import { mutate } from "swr";
+import { useAccount } from "wagmi";
+import convertInputDate from "@/utils/convertInputDate";
 
 export default function Plans() {
+  const { data, isLoading } = useMyPlan();
+  const { address } = useAccount();
   const { open, onOpen, onClose } = useModal();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+
+  const handleSubmit = (formData: TripPlanFormData) => {
+    createPlan({
+      ...formData,
+      walletAccount: address,
+      tripDeparture: convertInputDate(new Date(formData.tripDeparture || "")),
+      tripArrival: convertInputDate(new Date(formData.tripArrival || "")),
+    }).then(() => {
+      mutate(["/trip/myplan", address]);
+      onClose();
+    });
   };
+
   return (
     <>
       <PageContainer title="My Plan">
@@ -22,18 +40,26 @@ export default function Plans() {
         >
           <PlusIcon />
         </button>
-        <section>
-          {Array(10)
-            .fill(0)
-            .map((_, i) => (
-              <article key={i} className="mb-5">
-                <PlanCard />
-              </article>
-            ))}
-        </section>
+        {isLoading ? (
+          <h2>여행 계획을 가져오고 있습니다. 잠시만 기다려 주세요.</h2>
+        ) : (
+          <section>
+            {data.length > 0 ? (
+              <ul>
+                {data?.map((v, i) => (
+                  <li key={i} className="mb-5">
+                    <PlanCard data={v} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <h2>새로운 여행 계획을 만들어보세요.</h2>
+            )}
+          </section>
+        )}
       </PageContainer>
       <Modal open={open} onClose={onClose}>
-        <NewPlanForm onSubmit={handleSubmit} onCancel={onClose} />
+        <PlanForm onSubmit={handleSubmit} onCancel={onClose} />
       </Modal>
     </>
   );
