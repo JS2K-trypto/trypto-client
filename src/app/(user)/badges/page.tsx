@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Badge from "../../components/badges/Badge";
+import Badge from "../../../components/badges/Badge";
 import Button from "@/components/common/Button";
 import { Connector, useAccount, useConnect } from "wagmi";
 import { redirect, useRouter } from "next/navigation";
@@ -11,7 +11,7 @@ import axios from "axios";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/common/Modal";
 import NewBadgeModal from "@/components/badges/NewBadgeModal";
-import { useGeoLocation } from "@/app/badges/useGeoLocation";
+import { useGeoLocation } from "@/app/(user)/badges/useGeoLocation";
 import Lottie from "lottie-react";
 import LocationPin from "./LocationPin.json";
 import AirplaneLoading from "./AirplaneLoading.json";

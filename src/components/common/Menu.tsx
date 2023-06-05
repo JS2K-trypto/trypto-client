@@ -25,7 +25,7 @@ const Menu = ({ setActiveMenu }: MenuProps) => {
   const [changeNickname, setChangeNickname] = useState("");
 
   if (!isConnected) {
-    redirect(path.AUTH, RedirectType.replace);
+    redirect(path.HOME, RedirectType.replace);
   }
   const handleEdit = () => {
     setIsEdit(true);

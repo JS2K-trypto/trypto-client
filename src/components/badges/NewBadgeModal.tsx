@@ -3,7 +3,7 @@ import Input from "../common/Input";
 
 import axios from "axios";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
-import { ILocation } from "@/app/badges/useGeoLocation";
+import { ILocation } from "@/app/(user)/badges/useGeoLocation";
 
 interface NewBadgeModalProps {
   onCancel?: (e: React.MouseEvent<HTMLButtonElement>) => void;

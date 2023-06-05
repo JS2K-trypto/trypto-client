@@ -1,6 +1,6 @@
 "use client";
 import Button from "@/components/common/Button";
-import Badge from "../../../components/badges/Badge";
+import Badge from "../../../../components/badges/Badge";
 import { useRouter } from "next/navigation";
 import path from "@/configs/path";
 import Lottie from "lottie-react";
