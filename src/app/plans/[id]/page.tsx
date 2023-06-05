@@ -56,6 +56,18 @@ export default function PlanPage({ params }: { params: { id: number } }) {
     });
   };
 
+  const dayItems = currentPlan?.dayItems.reduce<
+    Record<string, TripPlanByTime[]>
+  >((acc, cur) => {
+    const startDate = new Date(cur.startDate).toISOString().split("T")[0];
+    if (acc[startDate]) {
+      acc[startDate] = acc[startDate].concat(cur);
+    } else {
+      acc[startDate] = [cur];
+    }
+    return acc;
+  }, {});
+
   return (
     <>
       <PageContainer
@@ -69,13 +81,24 @@ export default function PlanPage({ params }: { params: { id: number } }) {
         >
           edit
         </button>
-        <ul>
-          {currentPlan?.dayItems.map((v, i) => (
-            <li key={i} className="mb-5">
-              <TimeSchedule index={i} data={v} plan={currentPlan} />
-            </li>
-          ))}
-        </ul>
+        {dayItems &&
+          Object.entries(dayItems).map(([key, value], i) => {
+            return (
+              <div key={key}>
+                <h2 className="text-xl font-bold mb-2.5">
+                  {`Day ${i + 1}`} <span className=" text-base">{key}</span>
+                </h2>
+                <ul>
+                  {value.map((v, i) => (
+                    <li key={i} className="mb-5">
+                      <TimeSchedule index={i} data={v} plan={currentPlan} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+
         <button
           type="button"
           className="rounded-full bg-yellow-300 px-5 py-4 w-full flex-center"
