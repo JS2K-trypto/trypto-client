@@ -18,17 +18,20 @@ export default function PlanCard({ data }: PlanCardProps) {
       href={path.PLANS_ID}
       as={path.PLANS_ID.replace(":id", `${data?.tripId || ""}`)}
     >
-      <div className="bg-white/60 flex rounded-2xl items-center overflow-hidden shadow-md">
-        <Image
+      <div className="bg-white/60 flex rounded-2xl items-center overflow-hidden shadow-md p-5">
+        {/* <Image
           className="bg-cover shrink-0"
           src="/images/paris.png"
           alt="#"
           width={100}
           height={100}
-        />
-        <div className="pl-2.5 pr-5 font-bold overflow-hidden">
-          <p className="text-ellipsis whitespace-nowrap overflow-hidden">
+        /> */}
+        <div className="font-bold overflow-hidden whitespace-nowrap">
+          <p className="text-ellipsis overflow-hidden text-xl">
             {data?.tripTitle}
+          </p>
+          <p className="text-ellipsis whitespace-nowrap overflow-hidden">
+            {data?.tripCountry}
           </p>
           <p className="flex items-start flex-wrap">
             <span className="mr-2.5">{`D${
