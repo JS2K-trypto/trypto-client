@@ -1,12 +1,10 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import Badge from "../../../components/badges/Badge";
 import Button from "@/components/common/Button";
-import { Connector, useAccount, useConnect } from "wagmi";
-import { redirect, useRouter } from "next/navigation";
+import { useAccount } from "wagmi";
+import { useRouter } from "next/navigation";
 import path from "@/configs/path";
-import { RedirectType } from "next/dist/client/components/redirect";
 import axios from "axios";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/common/Modal";
@@ -27,13 +25,10 @@ export default function Badges() {
     "http://152.69.231.140:1323/v01/badge/user/all?walletAccount=";
   // "http://152.69.231.140:1323/v01/badge/user?walletAccount=";
   const getNewBadgeUrl = "http://152.69.231.140:1323/v01/badge/issue";
-  const { isConnected, address } = useAccount();
+  const { address } = useAccount();
   const { open, onOpen, onClose } = useModal();
   const router = useRouter();
   const { location, error } = useGeoLocation(geolocationOptions);
-  if (!isConnected) {
-    redirect(path.AUTH, RedirectType.replace);
-  }
   const [disableButton, setDisableButton] = useState(false);
   const [myBadges, setMyBadges] = useState([]);
   const [loadingBadge, setLoadingBadge] = useState(false);

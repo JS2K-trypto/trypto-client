@@ -1,10 +1,5 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
-import { redirect } from "next/navigation";
-import path from "@/configs/path";
-import { RedirectType } from "next/dist/client/components/redirect";
 import axios from "axios";
 import CommunityCard from "@/components/community/CommunityCard";
 
@@ -41,7 +36,6 @@ export interface PlanProps {
 }
 
 export default function Community() {
-  const { isConnected } = useAccount();
   const [allPlan, setAllPlan] = useState<PlanProps[]>([]);
   useEffect(() => {
     axios

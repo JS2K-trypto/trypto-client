@@ -3,15 +3,12 @@ import path from "@/configs/path";
 import { RedirectType } from "next/dist/client/components/redirect";
 import Image from "next/image";
 import { redirect, useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import { Connector, useAccount, useConnect } from "wagmi";
 
 export default function Page() {
   const router = useRouter();
   const { isConnected } = useAccount();
-  if (isConnected) {
-    redirect(path.COMMUNITY, RedirectType.replace);
-  }
   const { connectAsync, connectors, isLoading } = useConnect();
 
   const handleConnect = async (connector: Connector) => {
@@ -20,6 +17,14 @@ export default function Page() {
       router.push(path.COMMUNITY);
     } catch (e) {}
   };
+
+  useEffect(() => {
+    // 서버에서 렌더링 될때는 값이 false여서 무조건 홈으로 리다이렉트됨
+    if (isConnected) {
+      redirect(path.COMMUNITY, RedirectType.replace);
+    }
+  }, [isConnected]);
+
   return (
     <div className="absolute bottom-0 w-full h-[522px] bg-white/50 border-1 rounded-t-[15px] p-5 flex flex-col items-center font-bold">
       <Image
