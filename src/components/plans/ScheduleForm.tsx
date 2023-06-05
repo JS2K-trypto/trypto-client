@@ -11,29 +11,21 @@ interface ScheduleFormProps {
   onCancel?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const defaultData: TripPlanByTime = {
-  startDate: "00:00",
-  endDate: "00:00",
-  title: "",
-  note: "",
-};
-
 export default function ScheduleForm({
-  data = defaultData,
+  data,
   onSubmit,
   onCancel,
 }: ScheduleFormProps) {
-  // const today = new Date().toISOString().split("T").at(0);
-  // const startDate = data?.startDate
-  //   ? new Date(data.startDate).toISOString().split("T").at(0)
-  //   : today;
-  // const endDate = data?.endDate
-  //   ? new Date(data.endDate).toISOString().split("T").at(0)
-  //   : today;
+  const today = new Date().toISOString().split("T").at(0);
+  const startDate = data?.startDate
+    ? new Date(data.startDate).toISOString().split("T").at(0)
+    : today;
+  const endDate = data?.endDate
+    ? new Date(data.endDate).toISOString().split("T").at(0)
+    : today;
 
   const { register, handleSubmit, setValue } = useForm<TripPlanByTime>({
-    // defaultValues: { ...data, startDate: startDate, endDate: endDate },
-    defaultValues: data,
+    defaultValues: { ...data, startDate: startDate, endDate: endDate },
   });
 
   const handleDepartureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
