@@ -82,18 +82,27 @@ export default function PlanPage({ params }: { params: { id: number } }) {
           edit
         </button>
         {dayItems &&
-          Object.entries(dayItems).map(([key, value], i) => {
+          Object.entries(dayItems).map(([key, value], dayIndex) => {
             return (
               <div key={key}>
                 <h2 className="text-xl font-bold mb-2.5">
-                  {`Day ${i + 1}`} <span className=" text-base">{key}</span>
+                  {`Day ${dayIndex + 1}`}{" "}
+                  <span className=" text-base">{key}</span>
                 </h2>
                 <ul>
-                  {value.map((v, i) => (
-                    <li key={i} className="mb-5">
-                      <TimeSchedule index={i} data={v} plan={currentPlan} />
-                    </li>
-                  ))}
+                  {value.map((v, timeIndex) => {
+                    const timeId = dayIndex + timeIndex;
+                    return (
+                      <li key={timeId} className="mb-5">
+                        <TimeSchedule
+                          index={timeIndex}
+                          id={timeId}
+                          data={v}
+                          plan={currentPlan}
+                        />
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             );

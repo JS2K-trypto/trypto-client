@@ -13,26 +13,25 @@ import { mutate } from "swr";
 import { useAccount } from "wagmi";
 
 interface TimeScheduleProps {
+  id: number;
   index: number;
   plan?: TripPlan;
   data?: TripPlanByTime;
 }
 
-const defaultData: TripPlanByTime = {
-  startDate: "00:00",
-  endDate: "00:00",
-  title: "title",
-  note: "note",
-};
-
-export default function TimeSchedule({ index, plan, data }: TimeScheduleProps) {
+export default function TimeSchedule({
+  index,
+  id,
+  plan,
+  data,
+}: TimeScheduleProps) {
   const { open, onOpen, onClose } = useModal();
   const { address } = useAccount();
   const handleSubmit = (formData: TripPlanByTime) => {
     updatePlan({
       tripId: Number(plan?.tripId),
       dayItems: plan?.dayItems.map((v, i) =>
-        i === index
+        i === id
           ? {
               ...formData,
               startDate: v.startDate,
@@ -50,7 +49,7 @@ export default function TimeSchedule({ index, plan, data }: TimeScheduleProps) {
     e.stopPropagation();
     updatePlan({
       tripId: Number(plan?.tripId),
-      dayItems: plan?.dayItems.filter((v, i) => i !== index),
+      dayItems: plan?.dayItems.filter((v, i) => i !== id),
     }).then(() => {
       mutate(["/trip/myplan", address]);
       onClose();
@@ -69,12 +68,15 @@ export default function TimeSchedule({ index, plan, data }: TimeScheduleProps) {
           className="flex text-sm bg-white/60 rounded-2xl flex-1 ml-2.5 shadow-md items-center"
           onClick={onOpen}
         >
-          <div className="py-5 pl-5">
+          <div className="p-5 flex-1">
             <p className="text-base font-bold">{data?.title}</p>
             {/* <span className="text-xs mt-0.5">{data?.startDate}</span> */}
             <p>{data?.note}</p>
           </div>
-          <button className="ml-auto w-10 h-10" onClick={handleScheduleRemove}>
+          <button
+            className="ml-auto w-[44px] h-[44px] flex-center"
+            onClick={handleScheduleRemove}
+          >
             <CloseIcon />
           </button>
         </div>

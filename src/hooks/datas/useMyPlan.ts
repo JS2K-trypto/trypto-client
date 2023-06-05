@@ -20,7 +20,7 @@ export default function useMyPlan() {
     onError: (e: AxiosError, key, config) => {
       // 로그인이 되어있지 않을 경우
       if (!address) {
-        router.push("/auth");
+        router.push("/");
       }
     },
   });
