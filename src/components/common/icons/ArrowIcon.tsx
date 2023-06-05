@@ -25,16 +25,16 @@ export default forwardRef<SVGSVGElement, ArrowIconProps>(function ArrowIcon(
       <path
         d="M14 7L9 12"
         stroke="#292929"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9 12L14 17"
         stroke="#292929"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

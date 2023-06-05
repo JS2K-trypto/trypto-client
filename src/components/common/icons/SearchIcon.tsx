@@ -9,7 +9,7 @@ export default function SearchIcon() {
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_196_2649)">
+      <g clipPath="url(#clip0_196_2649)">
         <path
           fillRule="evenodd"
           clipRule="evenodd"
