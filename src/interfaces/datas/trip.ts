@@ -1,13 +1,10 @@
 import { WalletAccount } from "./user";
 
-export type TravelId = number;
-
-export interface TripPlanArr {
-  Arr: TripPlan[];
-}
+export type TripPlanId = number;
 
 export interface TripPlan {
-  travelId: TravelId;
+  tripId: TripPlanId;
+  nickName: string;
   walletAccount: WalletAccount;
   tripTitle: string;
   tripCountry: string;
@@ -16,14 +13,25 @@ export interface TripPlan {
   dayItems: Array<TripPlanByTime>;
 }
 
+export interface TripPlanByDay {
+  title: string;
+  date: string;
+  timeItems: Array<TripPlanByTime>;
+}
+
 export interface TripPlanByTime {
   startDate: string;
   endDate: string;
   title: string;
-  note: string;
+  note?: string;
 }
 
-export interface TripPlanFormData
-  extends Omit<TripPlan, "travelId" | "walletAccount" | "dayItems"> {}
-
-export interface PlanByDayFormData extends TripPlanByTime {}
+export interface TripPlanFormData {
+  tripId?: number;
+  walletAccount?: WalletAccount;
+  tripTitle?: string;
+  tripCountry?: string;
+  tripDeparture?: string;
+  tripArrival?: string;
+  dayItems?: Array<TripPlanByTime>;
+}

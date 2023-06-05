@@ -4,6 +4,7 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import FormLabel from "../common/FormLabel";
 import Input from "../common/Input";
+import { useAccount } from "wagmi";
 
 interface PlanFormProps {
   data?: TripPlanFormData;
@@ -12,13 +13,21 @@ interface PlanFormProps {
 }
 
 export default function PlanForm({ data, onSubmit, onCancel }: PlanFormProps) {
+  const { address } = useAccount();
   const today = new Date().toISOString().split("T").at(0);
+  const tripDeparture = data?.tripDeparture
+    ? new Date(data.tripDeparture).toISOString().split("T").at(0)
+    : today;
+  const tripArrival = data?.tripArrival
+    ? new Date(data.tripArrival).toISOString().split("T").at(0)
+    : today;
 
   const { register, handleSubmit } = useForm<TripPlanFormData>({
     defaultValues: {
-      tripDeparture: today,
-      tripArrival: today,
       ...data,
+      tripId: Number(data?.tripId),
+      tripDeparture: tripDeparture,
+      tripArrival: tripArrival,
     },
   });
 
@@ -34,6 +43,7 @@ export default function PlanForm({ data, onSubmit, onCancel }: PlanFormProps) {
         <FormLabel name="Trip Title">
           <Input
             className="w-full"
+            autoFocus
             {...register("tripTitle", {
               required: true,
             })}
@@ -60,8 +70,20 @@ export default function PlanForm({ data, onSubmit, onCancel }: PlanFormProps) {
           </FormLabel>
         </div>
         <FormLabel name="Contry">
-          <Input className="w-full" {...register("tripCountry")} />
+          <Input
+            className="w-full"
+            {...register("tripCountry", {
+              required: true,
+            })}
+          />
         </FormLabel>
+        <Input
+          type="hidden"
+          className="w-full"
+          {...register("tripId", {
+            valueAsNumber: true,
+          })}
+        />
         <div className="flex gap-5">
           <button
             type="button"
