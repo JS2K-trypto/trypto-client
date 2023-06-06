@@ -13,7 +13,7 @@ export default function Page() {
 
   const handleConnect = async (connector: Connector) => {
     if (!connector.ready) {
-      redirect(path.METAMASK_DOWNLOAD);
+      router.push(path.METAMASK_DOWNLOAD);
     } else {
       await connectAsync({ connector });
       router.push(path.COMMUNITY);
