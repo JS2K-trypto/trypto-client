@@ -12,10 +12,12 @@ export default function Page() {
   const { connectAsync, connectors, isLoading } = useConnect();
 
   const handleConnect = async (connector: Connector) => {
-    try {
+    if (!connector.ready) {
+      router.push(path.METAMASK_DOWNLOAD);
+    } else {
       await connectAsync({ connector });
       router.push(path.COMMUNITY);
-    } catch (e) {}
+    }
   };
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export default function Page() {
           onClick={() => handleConnect(connector)}
           disabled={isLoading}
         >
-          Connect Wallet
+          {isLoading ? "Connecting..." : "Wallet Connect"}
         </button>
       ))}
     </div>
