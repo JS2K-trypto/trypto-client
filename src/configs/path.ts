@@ -10,6 +10,8 @@ const path = {
   /* badge */
   BADGE: "/badges",
   BADGE_ISSUE: "/badges/issue",
+
+  METAMASK_DOWNLOAD: "https://metamask.io/",
 } as const;
 
 export default path;
